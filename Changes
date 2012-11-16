@@ -1,0 +1,6 @@
+Revision history for Lingua-FreeLing3-Utils
+
+0.01_01 Tue May  1 23:31:28 WEST 2012
+        - First version
+        - add ngrams function
+        - add ngrams_pp function
