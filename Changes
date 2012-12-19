@@ -1,5 +1,11 @@
 Revision history for Lingua-FreeLing3-Utils
 
+0.02    Tue Dec 18 11:23:26 WET 2012
+        - fix dependencies
+
+0.01    Fri Nov 16 19:07:47 WEST 2012
+        - First release
+
 0.01_01 Tue May  1 23:31:28 WEST 2012
         - First version
         - add ngrams function
