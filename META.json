@@ -34,12 +34,12 @@
          "requires" : {
             "File::Slurp" : "0",
             "Getopt::Std" : "0",
-            "Lingua::FreeLing3" : "0",
+            "Lingua::FreeLing3" : "0.04",
             "Scalar::Util" : "0",
             "Test::More" : "0"
          }
       }
    },
-   "release_status" : "stable",
-   "version" : "0.02"
+   "release_status" : "testing",
+   "version" : "0.02_1"
 }

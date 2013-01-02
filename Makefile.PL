@@ -17,7 +17,7 @@ WriteMakefile(
                   'Scalar::Util' => 0,
         'File::Slurp' => 0,
         'Getopt::Std' => 0,
-        'Lingua::FreeLing3' => 0,
+        'Lingua::FreeLing3' => 0.04,
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'Lingua-FreeLing3-Utils-*' },
