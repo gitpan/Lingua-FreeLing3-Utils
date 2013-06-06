@@ -1,5 +1,8 @@
 Revision history for Lingua-FreeLing3-Utils
 
+0.04    Thu Jun  6 22:16:59 WEST 2013
+        - Fix CPAN permissions
+
 0.03    Thu Jun  6 22:09:59 WEST 2013
         - Support "cumulative" ngrams
 
