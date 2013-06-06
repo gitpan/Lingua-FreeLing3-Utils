@@ -5,6 +5,8 @@ use strict;
 use warnings;
 use Scalar::Util 'blessed';
 
+no if $] >= 5.018, 'warnings', "experimental::smartmatch";
+
 require Exporter;
 our @ISA = qw(Exporter);
 
@@ -19,11 +21,11 @@ Lingua::FreeLing3::Utils - text processing utilities using FreeLing3 Perl inferf
 
 =head1 VERSION
 
-Version 0.02_1
+Version 0.03
 
 =cut
 
-our $VERSION = '0.02_1';
+our $VERSION = '0.03';
 
 =head1 SYNOPSIS
 
@@ -109,7 +111,7 @@ sub word_analysis {
 
     if (!$inited->{$l}) {
         morph($l,
-              ProbabilityAssignment => 'no',
+              ProbabilityAssignment  => 'no',
               QuantitiesDetection    => 'no',
               MultiwordsDetection    => 'no',
               NumbersDetection       => 'no',
@@ -130,19 +132,19 @@ sub word_analysis {
 
 =head2 ngrams
 
-Compute n-grams for a given input. The argument to this function is a
-filname to process. You can optionally add a hash reference of
+Compute n-grams for a given input. The argument to this function is
+the text to process. You can optionally add a hash reference of
 options.
 
-  ngrams({n => 2, l => 'en'}, $filename);
+  ngrams({n => 2, l => 'en'}, $text);
 
-The following options are availaboe:
+The following options are available:
 
 =over 4
 
 =item C<-n>
 
-Set n (default: bigrams n=2).
+Set n (default: bigrams, n = 2).
 
 =item C<-l>
 
@@ -155,6 +157,11 @@ Case insensitive (default: off).
 =item C<-t 1|0>
 
 Use C<<s>> and C<</s>> around sentences (default: on).
+
+=item C<-a 1|0>
+
+Compute all i-grams with i from 1 to the specified n value (default:
+off).
 
 =back
 
@@ -170,14 +177,16 @@ sub ngrams {
     my $n = $opts{n} || 2;
     my $l = $opts{l} || 'en';
     my $i = $opts{i} || 0;
-    my $t = $opts{t} || 0;
+    my $t = $opts{t} || 1;
+    my $a = $opts{a} || 0;
 
+    # transform text into list of tokens
     my $tokens;
     if ($t) {
         my $words = tokenizer($l)->tokenize($text);
         my $sentences = splitter($l)->split($words, buffered => 0);
         foreach (@$sentences) {
-            my @ts = map { $_->form } @$_;
+            my @ts = map { $_->form } $_->words;
             unshift @ts, '<s>';
             push @ts, '</s>';
             push @$tokens, @ts;
@@ -186,51 +195,69 @@ sub ngrams {
         $tokens = tokenizer($l)->tokenize($text, to_text=>1 );
     }
 
+    # compute ngrams
     my $ngrams;
     my $c = 0;
-    while ($c < @$tokens - $n + 1) {
-   	my @s = @$tokens[$c .. $c+$n-1];
-   	@s = map {lc $_} @s if $i;
-   	$ngrams->{__tuple(@s)}->{count}++;
-   	$c++;
-    }
 
-    my $total = @$tokens;
-    foreach (keys %$ngrams) {
-        my ($numerator, $denominator);
-
-        $numerator = $ngrams->{$_}->{count};
-        if ($n > 1) {
-            my $count = 0;
-            my @search = __untuple($_);
-            pop @search;
-            my $c = 0;
-            while ($c < @$tokens - $n + 1) {
-      		my @s = @$tokens[$c .. $c+$n-2];
-
-                $count++ if @s ~~ @search;
-                $c++;
+    if ($a) {
+        my @window;
+        while ($c < @$tokens) {
+            push @window, $i ? lc $tokens->[$c] : $tokens->[$c];
+            for (1 .. $n) {
+                if (@window >= $_) {
+                    my $tuple = __tuple(@window[scalar(@window)-$_ .. scalar(@window)-1]);
+                    $ngrams->[$_-1]{$tuple}{count}++;
+                }
             }
-            $denominator = $count;
-        } else {
-            $denominator = $total;
+            shift @window if @window > $n - 1;
+            $c++;
         }
-        if ($numerator and $denominator and $denominator != 0) {
-            $ngrams->{$_}->{p} = $numerator / $denominator
+    } else {
+        while ($c < @$tokens - $n + 1) {
+            my @s = @$tokens[$c .. $c+$n-1];
+            @s = map { lc $_ } @s if $i;
+            $ngrams->[0]->{__tuple(@s)}->{count}++;
+            $c++;
         }
     }
 
-    return $ngrams;
+    # compute percentages
+    for my $ngram (@$ngrams) {
+        my $total = @$tokens;
+        foreach (keys %$ngram) {
+            my ($numerator, $denominator);
+
+            $numerator = $ngram->{$_}->{count};
+            if ($n > 1) {
+                my $count = 0;
+                my @search = __untuple($_);
+                pop @search;
+                my $c = 0;
+                while ($c < @$tokens - $n + 1) {
+                    my @s = @$tokens[$c .. $c+$n-2];
+
+                    $count++ if @s ~~ @search;
+                    $c++;
+                }
+                $denominator = $count;
+            } else {
+                $denominator = $total;
+            }
+            if ($numerator and $denominator and $denominator != 0) {
+                $ngram->{$_}->{p} = $numerator / $denominator
+            }
+        }
+    }
+
+    return $a ? $ngrams : $ngrams->[0];
 }
 
 sub __tuple {
-    my (@l) = @_;
-    join(' ', @l);
+    join ' ', @_;
 }
 
 sub __untuple {
-    my ($str) = @_;
-    split /\s/, $str;
+    split /\s/, $_[0];
 }
 
 =head2 ngrams_pp

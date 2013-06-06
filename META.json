@@ -4,7 +4,7 @@
       "Nuno Carvalho <smash@cpan.org>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "ExtUtils::MakeMaker version 6.62, CPAN::Meta::Converter version 2.120921",
+   "generated_by" : "ExtUtils::MakeMaker version 6.66, CPAN::Meta::Converter version 2.131560",
    "license" : [
       "perl_5"
    ],
@@ -34,12 +34,12 @@
          "requires" : {
             "File::Slurp" : "0",
             "Getopt::Std" : "0",
-            "Lingua::FreeLing3" : "0.04",
+            "Lingua::FreeLing3" : "0",
             "Scalar::Util" : "0",
             "Test::More" : "0"
          }
       }
    },
-   "release_status" : "testing",
-   "version" : "0.02_1"
+   "release_status" : "stable",
+   "version" : "0.03"
 }
