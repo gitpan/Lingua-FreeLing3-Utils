@@ -1,5 +1,9 @@
 Revision history for Lingua-FreeLing3-Utils
 
+0.05    Fri Jun  7 11:53:51 WEST 2013
+        - Fix issue when computing probabilities for cumulative
+          ngrams;
+
 0.04    Thu Jun  6 22:16:59 WEST 2013
         - Fix CPAN permissions
 

@@ -21,11 +21,11 @@ Lingua::FreeLing3::Utils - text processing utilities using FreeLing3 Perl inferf
 
 =head1 VERSION
 
-Version 0.04
+Version 0.05
 
 =cut
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 =head1 SYNOPSIS
 
@@ -222,19 +222,20 @@ sub ngrams {
     }
 
     # compute percentages
+    my $nn = $a ? 1 : $n;
     for my $ngram (@$ngrams) {
         my $total = @$tokens;
         foreach (keys %$ngram) {
             my ($numerator, $denominator);
 
             $numerator = $ngram->{$_}->{count};
-            if ($n > 1) {
+            if ($nn > 1) {
                 my $count = 0;
                 my @search = __untuple($_);
                 pop @search;
                 my $c = 0;
-                while ($c < @$tokens - $n + 1) {
-                    my @s = @$tokens[$c .. $c+$n-2];
+                while ($c < @$tokens - $nn + 1) {
+                    my @s = @$tokens[$c .. $c+$nn-2];
 
                     $count++ if @s ~~ @search;
                     $c++;
@@ -247,6 +248,7 @@ sub ngrams {
                 $ngram->{$_}->{p} = $numerator / $denominator
             }
         }
+        ++$nn;
     }
 
     return $a ? $ngrams : $ngrams->[0];

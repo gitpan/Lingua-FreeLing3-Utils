@@ -23,4 +23,4 @@ requires:
   Lingua::FreeLing3: 0
   Scalar::Util: 0
   Test::More: 0
-version: 0.04
+version: 0.05
