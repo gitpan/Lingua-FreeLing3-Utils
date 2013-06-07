@@ -21,11 +21,11 @@ Lingua::FreeLing3::Utils - text processing utilities using FreeLing3 Perl inferf
 
 =head1 VERSION
 
-Version 0.06
+Version 0.07
 
 =cut
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 =head1 SYNOPSIS
 
@@ -206,7 +206,7 @@ sub ngrams {
             for (1 .. $n) {
                 if (@window >= $_) {
                     my $tuple = __tuple(@window[scalar(@window)-$_ .. scalar(@window)-1]);
-                    $ngrams->[$_-1]{$tuple}{count}++;
+                    $ngrams->[$_-1]{$tuple}{count}++ if $tuple;
                 }
             }
             shift @window if @window > $n - 1;
@@ -216,7 +216,8 @@ sub ngrams {
         while ($c < @$tokens - $n + 1) {
             my @s = @$tokens[$c .. $c+$n-1];
             @s = map { lc $_ } @s if $i;
-            $ngrams->[0]->{__tuple(@s)}->{count}++;
+            my $tuple = __tuple(@s);
+            $ngrams->[0]->{$tuple}->{count}++ if $tuple;
             $c++;
         }
     }
@@ -255,7 +256,10 @@ sub ngrams {
 }
 
 sub __tuple {
-    join ' ', @_;
+    my $t = join ' ', @_;
+    return undef if $t =~ m{</s>.};
+    return undef if $t =~ m{.<s>};
+    return $t;
 }
 
 sub __untuple {

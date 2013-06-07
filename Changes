@@ -1,5 +1,8 @@
 Revision history for Lingua-FreeLing3-Utils
 
+0.07    Fri Jun  7 19:13:51 WEST 2013
+        - Do not count sentence-end/sentence-begin as valid grams.
+
 0.06    Fri Jun  7 17:07:36 WEST 2013
         - Fix issue with ngrams default options
 
