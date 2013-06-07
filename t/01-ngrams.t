@@ -1,7 +1,7 @@
 #!perl -T
 
 use Lingua::FreeLing3::Utils qw/ngrams/;
-use Test::More tests => 18;
+use Test::More tests => 21;
 
 my $text=<<'EOT';
 E o tempo responde ao tempo
@@ -19,6 +19,14 @@ is $data->{'tem'}{count}, 2, 'simple unigram count';
 is sprintf("%.8f", $data->{'E'}{p}), '0.05000000', 'simple unigram p';
 is sprintf("%.8f", $data->{'tempo'}{p}), '0.30000000', 'simple unigram p';
 is sprintf("%.8f", $data->{'tem'}{p}), '0.10000000', 'simple unigram p';
+
+
+### -- Unigrams without <s></s>
+$data = undef;
+$data = ngrams({n=>1, t=>0, l=>'pt'}, $text);
+is $data->{'tempo'}{count}, 6, 'simple unigram count';
+is $data->{'E'}{count}, 1, 'simple unigram count';
+is $data->{'tem'}{count}, 2, 'simple unigram count';
 
 
 ### -- Bigrams

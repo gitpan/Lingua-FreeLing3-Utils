@@ -1,5 +1,8 @@
 Revision history for Lingua-FreeLing3-Utils
 
+0.06    Fri Jun  7 17:07:36 WEST 2013
+        - Fix issue with ngrams default options
+
 0.05    Fri Jun  7 11:53:51 WEST 2013
         - Fix issue when computing probabilities for cumulative
           ngrams;

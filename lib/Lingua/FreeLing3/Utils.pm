@@ -21,11 +21,11 @@ Lingua::FreeLing3::Utils - text processing utilities using FreeLing3 Perl inferf
 
 =head1 VERSION
 
-Version 0.05
+Version 0.06
 
 =cut
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 =head1 SYNOPSIS
 
@@ -174,11 +174,11 @@ sub ngrams {
     my ($text) = @_;
 
     # handle options and defaults
-    my $n = $opts{n} || 2;
-    my $l = $opts{l} || 'en';
-    my $i = $opts{i} || 0;
-    my $t = $opts{t} || 1;
-    my $a = $opts{a} || 0;
+    my $n = $opts{n} // 2;
+    my $l = $opts{l} // 'en';
+    my $i = $opts{i} // 0;
+    my $t = $opts{t} // 1;
+    my $a = $opts{a} // 0;
 
     # transform text into list of tokens
     my $tokens;
