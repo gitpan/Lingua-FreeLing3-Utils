@@ -1,5 +1,9 @@
 Revision history for Lingua-FreeLing3-Utils
 
+0.08    Sun Jun  9 12:53:26 WEST 2013
+        - Require Lingua::FreeLing3 properly
+        - Minor bug fixes
+
 0.07    Fri Jun  7 19:13:51 WEST 2013
         - Do not count sentence-end/sentence-begin as valid grams.
 

@@ -20,7 +20,7 @@ no_index:
 requires:
   File::Slurp: 0
   Getopt::Std: 0
-  Lingua::FreeLing3: 0
+  Lingua::FreeLing3: 0.06
   Scalar::Util: 0
   Test::More: 0
-version: 0.07
+version: 0.08

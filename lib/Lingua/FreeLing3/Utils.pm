@@ -21,11 +21,11 @@ Lingua::FreeLing3::Utils - text processing utilities using FreeLing3 Perl inferf
 
 =head1 VERSION
 
-Version 0.07
+Version 0.08
 
 =cut
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 =head1 SYNOPSIS
 
