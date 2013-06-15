@@ -8,6 +8,7 @@ WriteMakefile(
     AUTHOR              => q{Nuno Carvalho <smash@cpan.org>},
     VERSION_FROM        => 'lib/Lingua/FreeLing3/Utils.pm',
     ABSTRACT_FROM       => 'lib/Lingua/FreeLing3/Utils.pm',
+    EXE_FILES           => ['scripts/fl3-ngrams', 'scripts/fl3-wordanalysis', 'scripts/fl3-nlgrep'],
     ($ExtUtils::MakeMaker::VERSION >= 6.3002
       ? ('LICENSE'=> 'perl')
       : ()),

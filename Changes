@@ -1,5 +1,8 @@
 Revision history for Lingua-FreeLing3-Utils
 
+0.09    Sat Jun 15 16:26:36 WEST 2013
+        - install fl3-ngrams, fl3-wordanalysis and fl3-nlgrep.
+
 0.08    Sun Jun  9 12:53:26 WEST 2013
         - Require Lingua::FreeLing3 properly
         - Minor bug fixes

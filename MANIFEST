@@ -11,5 +11,6 @@ scripts/fl3-ngrams
 t/02-wordanalysis.t
 t/01-ngrams.t
 scripts/fl3-wordanalysis
+scripts/fl3-nlgrep
 META.yml                                 Module YAML meta-data (added by MakeMaker)
 META.json                                Module JSON meta-data (added by MakeMaker)
